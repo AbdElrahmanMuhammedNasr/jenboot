@@ -35,7 +35,6 @@ stage('Cleanup Old Images/Container') {
             } else {
                 echo "No containers found with name ${DOCKER_CONTAINER_NAME}. Hello!"
             }
-
             // Check if images exist
             def imageName = "${DOCKER_IMAGE_NAME}"
             def currentImageTag = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
