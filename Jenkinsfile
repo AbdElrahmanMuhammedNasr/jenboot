@@ -23,7 +23,6 @@ pipeline {
                 sh "${MAVEN_HOME}/bin/mvn clean package"
             }
         }
-
         stage('Cleanup Old Images') {
             steps {
                 script {
