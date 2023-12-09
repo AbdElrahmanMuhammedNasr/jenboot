@@ -1,0 +1,63 @@
+pipeline {
+    agent any
+
+    environment {
+        // Define environment variables if needed
+        MAVEN_HOME = tool 'Maven'
+        JAVA_HOME = tool 'JDK17'
+        DOCKER_IMAGE_NAME = 'jenboot' // Replace with your Docker image name
+        DOCKER_IMAGE_TAG = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
+//         DOCKER_REGISTRY = 'your-docker-registry' // Replace with your Docker registry URL
+//         DOCKER_IMAGE_TAG = "${DOCKER_REGISTRY}/${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh "${MAVEN_HOME}/bin/mvn clean package"
+            }
+        }
+
+        stage('Build and Push Docker Image') {
+            steps {
+                script {
+                    // Build and tag the Docker image
+                    sh "docker build -t ${DOCKER_IMAGE_TAG} ."
+
+                    // Log in to Docker registry (if needed)
+                    // sh "docker login -u your-docker-username -p your-docker-password ${DOCKER_REGISTRY}"
+
+                    // Push the Docker image to the registry
+                    //sh "docker push ${DOCKER_IMAGE_TAG}"
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // You can add additional deployment steps here based on your needs
+            }
+        }
+
+        stage('Post-build') {
+            steps {
+                // Any post-build steps you may need
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build and deployment successful!'
+        }
+        failure {
+            echo 'Build or deployment failed!'
+        }
+    }
+}
