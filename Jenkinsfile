@@ -24,6 +24,35 @@ pipeline {
             }
         }
 
+        stage('Cleanup Old Images') {
+            steps {
+                script {
+                    def imageName = "${DOCKER_IMAGE_NAME}"
+                    def currentImageTag = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
+                    def imageTags = sh(script: "docker images --format '{{.Repository}}:{{.Tag}}' | grep ${imageName}", returnStdout: true).trim().split('\n')
+
+                    // Remove old image tags (except the current one)
+                    for (def tag in imageTags) {
+                        if (tag != currentImageTag) {
+                            sh "docker rmi -f $tag"
+                        }
+                    }
+                }
+            }
+        }
+
+//     stage('Cleanup Old Containers and Images') {
+//             steps {
+//                 script {
+//                     // Stop and remove all containers
+//                     sh 'docker container stop $(docker container ls -aq)'
+//                     sh 'docker container rm $(docker container ls -aq)'
+//
+//                     // Remove old Docker image
+//                     sh "docker rmi $(docker images -q ${DOCKER_IMAGE_NAME})"
+//                 }
+//             }
+//         }
         stage('Build and Push Docker Image') {
             steps {
                 script {
