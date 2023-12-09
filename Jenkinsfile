@@ -27,16 +27,14 @@ pipeline {
         stage('Cleanup Old Images/Container') {
             steps {
                 script {
-                      // Check if containers exist
-                                        def containersExist = sh(script: "docker ps -a -q --filter name=${DOCKER_CONTAINER_NAME} | wc -l", returnStatus: true) == 0
-
-                                        // Remove old containers if they exist
-                                        if (containersExist) {
-                                            sh "docker ps -a -q --filter name=${DOCKER_CONTAINER_NAME} | xargs -r docker rm -f"
-                                            echo "Containers removed."
-                                        } else {
-                                            echo "No containers found with name ${DOCKER_CONTAINER_NAME}. Hello!"
-                                        }
+//                       // Check if containers exist
+//                                         def containersExist = sh(script: "docker ps -a -q --filter name=${DOCKER_CONTAINER_NAME} | wc -l", returnStatus: true) == 0
+//                                         if (containersExist) {
+//                                             sh "docker ps -a -q --filter name=${DOCKER_CONTAINER_NAME} | xargs -r docker rm -f"
+//                                             echo "Containers removed."
+//                                         } else {
+//                                             echo "No containers found with name ${DOCKER_CONTAINER_NAME}. Hello!"
+//                                         }
 
                     def imageName = "${DOCKER_IMAGE_NAME}"
                     def currentImageTag = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
