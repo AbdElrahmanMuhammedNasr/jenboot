@@ -23,10 +23,10 @@ pipeline {
                 sh "${MAVEN_HOME}/bin/mvn clean package"
             }
         }
-        stage('Cleanup Old Images') {
+        stage('Cleanup Old Images/Container') {
             steps {
                 script {
-                    sh 'docker container rm -f  jenbootservice'
+                    sh "docker ps -a -q --filter name=jenbootservice | xargs -r docker container rm -f  jenbootservice"
                     def imageName = "${DOCKER_IMAGE_NAME}"
                     def currentImageTag = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
                     def imageTags = sh(script: "docker images --format '{{.Repository}}:{{.Tag}}' | grep ${imageName}", returnStdout: true).trim().split('\n')
@@ -41,18 +41,6 @@ pipeline {
             }
         }
 
-//     stage('Cleanup Old Containers and Images') {
-//             steps {
-//                 script {
-//                     // Stop and remove all containers
-//                     sh 'docker container stop $(docker container ls -aq)'
-//                     sh 'docker container rm $(docker container ls -aq)'
-//
-//                     // Remove old Docker image
-//                     sh "docker rmi $(docker images -q ${DOCKER_IMAGE_NAME})"
-//                 }
-//             }
-//         }
         stage('Build and Push Docker Image') {
             steps {
                 script {
