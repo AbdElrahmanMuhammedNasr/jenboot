@@ -29,7 +29,7 @@ pipeline {
                 script {
                     // Build and tag the Docker image
                     sh "docker build -t ${DOCKER_IMAGE_TAG} ."
-                    sh "docker container run --name jenbootservice  ${DOCKER_IMAGE_TAG}"
+                    sh "docker container run -d --name jenbootservice  ${DOCKER_IMAGE_TAG}"
 
 
 
