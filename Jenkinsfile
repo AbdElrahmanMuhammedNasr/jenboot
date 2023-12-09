@@ -27,7 +27,6 @@ pipeline {
         stage('Cleanup Old Images/Container') {
             steps {
                 script {
-                    sh "docker ps -a -q --filter name=${DOCKER_CONTAINER_NAME} | xargs -r docker rm -f"
                      def containersExist = sh(script: "docker ps -a -q --filter name=${DOCKER_CONTAINER_NAME}", returnStatus: true) == 0
                      // Remove old containers if they exist
                      if (containersExist) {
