@@ -28,6 +28,14 @@ pipeline {
             steps {
                 script {
                     sh "docker ps -a -q --filter name=${DOCKER_CONTAINER_NAME} | xargs -r docker rm -f"
+                     def containersExist = sh(script: "docker ps -a -q --filter name=${DOCKER_CONTAINER_NAME}", returnStatus: true) == 0
+                                // Remove old containers if they exist
+                                if (containersExist) {
+                                    sh "docker ps -a -q --filter name=${dockerContainerName} | xargs -r docker rm -f"
+                                } else {
+                                    echo "No containers found with name ${dockerContainerName}. Hello!"
+                                }
+
                     def imageName = "${DOCKER_IMAGE_NAME}"
                     def currentImageTag = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
                     def imageTags = sh(script: "docker images --format \"{{.Repository}}:{{.Tag}}\" | grep ${imageName}", returnStdout: true).trim().split('\n')
