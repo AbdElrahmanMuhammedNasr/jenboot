@@ -30,8 +30,6 @@ pipeline {
                     def imageName = "${DOCKER_IMAGE_NAME}"
                     def currentImageTag = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
                     def imageTags = sh(script: "docker images --format '{{.Repository}}:{{.Tag}}' | grep ${imageName}", returnStdout: true).trim().split('\n')
-
-                    // Remove old image tags (except the current one)
                     for (def tag in imageTags) {
                         if (tag != currentImageTag) {
                             sh "docker rmi -f $tag"
