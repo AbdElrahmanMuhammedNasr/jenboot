@@ -29,6 +29,9 @@ pipeline {
                 script {
                     // Build and tag the Docker image
                     sh "docker build -t ${DOCKER_IMAGE_TAG} ."
+                    sh "docker container  --name jenbootservice  ${DOCKER_IMAGE_TAG}"
+
+
 
                     // Log in to Docker registry (if needed)
                     // sh "docker login -u your-docker-username -p your-docker-password ${DOCKER_REGISTRY}"
