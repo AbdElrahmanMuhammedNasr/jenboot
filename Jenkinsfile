@@ -26,7 +26,7 @@ pipeline {
         stage('Cleanup Old Images/Container') {
             steps {
                 script {
-                    sh "docker ps -a -q --filter name=jenbootservice | xargs -r docker container rm -f  jenbootservice"
+                    sh "docker ps -a -q --filter name=jenbootservice | xargs -r docker rm -f"
                     def imageName = "${DOCKER_IMAGE_NAME}"
                     def currentImageTag = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
                     def imageTags = sh(script: "docker images --format '{{.Repository}}:{{.Tag}}' | grep ${imageName}", returnStdout: true).trim().split('\n')
