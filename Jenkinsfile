@@ -27,23 +27,26 @@ pipeline {
         stage('Cleanup Old Images/Container') {
             steps {
                 script {
-//                       // Check if containers exist
-//                                         def containersExist = sh(script: "docker ps -a -q --filter name=${DOCKER_CONTAINER_NAME} | wc -l", returnStatus: true) == 0
-//                                         if (containersExist) {
-//                                             sh "docker ps -a -q --filter name=${DOCKER_CONTAINER_NAME} | xargs -r docker rm -f"
-//                                             echo "Containers removed."
-//                                         } else {
-//                                             echo "No containers found with name ${DOCKER_CONTAINER_NAME}. Hello!"
-//                                         }
+                      // Check if containers exist
+                      def containersExist = sh(script: "docker ps -a -q --filter name=${DOCKER_CONTAINER_NAME} | wc -l", returnStatus: true) == 0
+                      if (containersExist) {
+                             sh "docker ps -a -q --filter name=${DOCKER_CONTAINER_NAME} | xargs -r docker rm -f"
+                             echo "Containers removed."
+                      } else {
+                             echo "No containers found with name ${DOCKER_CONTAINER_NAME}. Hello!"
+                      }
 
                     def imageName = "${DOCKER_IMAGE_NAME}"
                     def currentImageTag = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
-                    def imageTags = sh(script: "docker images --format \"{{.Repository}}:{{.Tag}}\" | grep ${imageName}", returnStdout: true).trim().split('\n')
-                    for (def tag in imageTags) {
-                        if (tag != currentImageTag) {
-                            sh "docker rmi -f $tag"
+                    def imageTagsExist = sh(script: "docker images --format \"{{.Repository}}:{{.Tag}}\" | grep ${imageName}", returnStdout: true) == 0
+                    if(imageTagsExist){
+                            def imageTags = sh(script: "docker images --format \"{{.Repository}}:{{.Tag}}\" | grep ${imageName}", returnStdout: true).trim().split('\n')
+                            for (def tag in imageTags) {
+                                if (tag != currentImageTag) {
+                                    sh "docker rmi -f $tag"
+                                }
+                            }
                         }
-                    }
                 }
             }
         }
