@@ -30,9 +30,9 @@ pipeline {
                      def containersExist = sh(script: "docker ps -a -q --filter name=${DOCKER_CONTAINER_NAME}", returnStatus: true) == 0
                      // Remove old containers if they exist
                      if (containersExist) {
-                           sh "docker ps -a -q --filter name=${dockerContainerName} | xargs -r docker rm -f"
+                           sh "docker ps -a -q --filter name=${DOCKER_CONTAINER_NAME} | xargs -r docker rm -f"
                      } else {
-                           echo "No containers found with name ${dockerContainerName}. Hello!"
+                           echo "No containers found with name ${DOCKER_CONTAINER_NAME}. Hello!"
                      }
 
                     def imageName = "${DOCKER_IMAGE_NAME}"
