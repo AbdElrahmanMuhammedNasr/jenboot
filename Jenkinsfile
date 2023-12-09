@@ -26,6 +26,7 @@ pipeline {
         stage('Cleanup Old Images') {
             steps {
                 script {
+                    sh 'docker container rm -f  jenbootservice'
                     def imageName = "${DOCKER_IMAGE_NAME}"
                     def currentImageTag = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
                     def imageTags = sh(script: "docker images --format '{{.Repository}}:{{.Tag}}' | grep ${imageName}", returnStdout: true).trim().split('\n')
