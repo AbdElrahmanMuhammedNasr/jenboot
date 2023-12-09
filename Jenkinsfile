@@ -41,13 +41,13 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                // You can add additional deployment steps here based on your needs
+            echo 'Deploy!'
             }
         }
 
         stage('Post-build') {
             steps {
-                // Any post-build steps you may need
+            echo 'Post-build!'
             }
         }
     }
