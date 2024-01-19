@@ -14,18 +14,18 @@ public class TestResource {
 
     @GetMapping("/bye")
      public String getByeMessage(String msg){
-    System.out.println("fdff")
-    System.out.println("fdff")
-    System.out.println("fdff")
-    System.out.println("fdff")
-    System.out.println("fdff")
-    System.out.println("fdff")
-    System.out.println("fdff")
-    System.out.println("fdff")
-    System.out.println("fdff")
-    System.out.println("fdff")
-    System.out.println("fdff")
-    System.out.println("fdff")
+    System.out.println("fdff");
+    System.out.println("fdff");
+    System.out.println("fdff");
+    System.out.println("fdff");
+    System.out.println("fdff");
+    System.out.println("fdff");
+    System.out.println("fdff");
+    System.out.println("fdff");
+    System.out.println("fdff");
+    System.out.println("fdff");
+    System.out.println("fdff");
+    System.out.println("fdff");
 
          return "Hi Message";
     }
