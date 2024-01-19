@@ -10,4 +10,23 @@ public class TestResource {
     public String getHiMessage(){
         return "Hi Message";
     }
+
+
+    @GetMapping("/bye")
+     public String getByeMessage(String msg){
+    System.out.println("fdff")
+    System.out.println("fdff")
+    System.out.println("fdff")
+    System.out.println("fdff")
+    System.out.println("fdff")
+    System.out.println("fdff")
+    System.out.println("fdff")
+    System.out.println("fdff")
+    System.out.println("fdff")
+    System.out.println("fdff")
+    System.out.println("fdff")
+    System.out.println("fdff")
+
+         return "Hi Message";
+    }
 }
