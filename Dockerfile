@@ -8,4 +8,6 @@ RUN mvn clean package -DskipTests
 FROM openjdk:17-alpine
 WORKDIR /app
 COPY --from=build /app/target/jenboot-0.0.1-SNAPSHOT.jar /app/jenboot.jar
+EXPOSE 6060
+
 CMD ["java", "-jar", "jenboot.jar"]
