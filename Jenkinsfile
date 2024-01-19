@@ -42,7 +42,7 @@ pipeline {
                 script {
                     // Build and tag the Docker image
                     sh "docker build -t ${DOCKER_IMAGE_TAG} ."
-                    sh "docker container run -d --name ${DOCKER_CONTAINER_NAME}  ${DOCKER_IMAGE_TAG}"
+                    sh "docker container run -d  -p 6060:6060  --name ${DOCKER_CONTAINER_NAME}  ${DOCKER_IMAGE_TAG}"
 
 
 
