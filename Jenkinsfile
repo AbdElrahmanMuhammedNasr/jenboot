@@ -30,7 +30,7 @@ pipeline {
            steps {
 	           script {
 		        withSonarQubeEnv(credentialsId: 'sonerqube_secret_key') { 
-                        sh "mvn sonar:sonar"
+                        sh "${MAVEN_HOME}/bin/mvn sonar:sonar"
 		        }
 	           }	
            }
