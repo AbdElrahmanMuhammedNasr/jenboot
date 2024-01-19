@@ -24,36 +24,7 @@ pipeline {
                 sh "${MAVEN_HOME}/bin/mvn clean package"
             }
         }
-stage('Cleanup Old Images/Container') {
-    steps {
-        script {
-            // Check if containers exist
-            def containersExist = sh(script: "docker ps -a -q --filter name=${DOCKER_CONTAINER_NAME} | wc -l", returnStatus: true) == 1
-            if (containersExist) {
-                sh "docker ps -a -q --filter name=${DOCKER_CONTAINER_NAME} | xargs -r docker rm -f"
-                echo "Containers removed."
-            } else {
-                echo "No containers found with name ${DOCKER_CONTAINER_NAME}. Hello!"
-            }
-            // Check if images exist
-            def imageName = "${DOCKER_IMAGE_NAME}"
-            def currentImageTag = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
-            def imageTags = sh(script: "docker images --format \"{{.Repository}}:{{.Tag}}\" | grep ${imageName}", returnStatus: true)
 
-            if (imageTags == 0) {
-                echo "No images found with name ${imageName}. Hello!"
-            } else {
-                def imageTagsList = sh(script: "docker images --format \"{{.Repository}}:{{.Tag}}\" | grep ${imageName}", returnStdout: true).trim().split('\n')
-                for (def tag in imageTagsList) {
-                    if (tag != currentImageTag) {
-                        sh "docker rmi -f $tag"
-                    }
-                }
-                echo "Images removed."
-            }
-        }
-    }
-}
 
 
         stage('Build and Push Docker Image') {
