@@ -26,6 +26,16 @@ pipeline {
         }
 
 
+     stage("SonarQube Analysis"){
+           steps {
+	           script {
+		        withSonarQubeEnv(credentialsId: 'sonerqube_secret_key') { 
+                        sh "mvn sonar:sonar"
+		        }
+	           }	
+           }
+       }
+        
 
         stage('Build and Push Docker Image') {
             steps {
