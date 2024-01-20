@@ -36,7 +36,10 @@ pipeline {
             steps {
                 script {
                     // Build and tag the Docker image
-                    sh "docker build -t ${DOCKER_IMAGE_TAG} ."
+                    dockerImage = docker.build  ${DOCKER_IMAGE_TAG}
+
+                    
+                    // sh "docker build -t ${DOCKER_IMAGE_TAG} ."
                     sh "docker container run -d -p 6060:6060 --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_TAG}"
 
                     // Log in to Docker registry (if needed)
