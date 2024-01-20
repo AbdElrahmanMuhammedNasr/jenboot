@@ -64,7 +64,7 @@ pipeline {
 		        protocol: 'http',
 		        nexusUrl: 'http://192.168.1.7:8081',
 		        groupId: 'com.jenboot',
-		        version: ${BUILD_NUMBER},
+		        version: '${BUILD_NUMBER}',
 		        repository: 'jenboot',
 		        credentialsId: 'nexus_server',
 		        artifacts: [
