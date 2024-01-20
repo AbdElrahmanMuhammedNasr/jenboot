@@ -10,7 +10,7 @@ pipeline {
         DOCKER_IMAGE_TAG = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
 //         DOCKER_REGISTRY = 'your-docker-registry' // Replace with your Docker registry URL
 //         DOCKER_IMAGE_TAG = "${DOCKER_REGISTRY}/${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
-	NEXUS_REGISTRY = "http://192.168.1.7:8081/repository/jenboot/"
+	NEXUS_REGISTRY = "https://192.168.1.7:8081/repository/jenboot/"
         NEXUS_USERNAME = "admin"
         NEXUS_PASSWORD = "root"	    
     }
