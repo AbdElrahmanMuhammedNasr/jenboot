@@ -67,7 +67,7 @@ pipeline {
 		        artifacts: [
 		            [artifactId: 'jenboot',
 		             classifier: '',
-		             file: 'jenservuce + version + '.jar',
+		             file: 'jenservuce' + version + '.jar',
 		             type: 'jar']
 		        ]
 		     )
