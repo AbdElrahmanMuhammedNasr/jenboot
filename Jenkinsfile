@@ -67,7 +67,7 @@ pipeline {
 		        artifacts: [
 		            [artifactId: 'jenboot',
 		             classifier: '',
-		             file: 'jenboot.jar',
+		             file: '/target/jenboot-0.0.1-SNAPSHOT.jar',
 		             type: 'jar']
 		        ]
 		     )
