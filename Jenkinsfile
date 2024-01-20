@@ -49,32 +49,35 @@ pipeline {
                     //    sh ' echo $PASS | docker login -u $USER --password-stdin http://192.168.1.7:8081'
                     //    sh 'docker push http://192.168.1.7:8081/repository/jenboot:$BUILD_NUMBER'
                     // }
+
+                    docker.withRegistry( 'http://192.168.1.7:8081', nexus_server ) {
+                    dockerImage.push('latest')
                     
                 }
             }
         }
 
-        stage('Push Docker Image to Nexus') {
-            steps {
-                nexusArtifactUploader(
-                    nexusVersion: 'nexus3',
-                    protocol: 'http',
-                    nexusUrl: '192.168.1.7:8081',
-                    groupId: 'QA',
-                    version: "${env.BUILD_ID}",
-                    repository: 'jenboot',
-                    credentialsId: 'nexus_server',
-                    artifacts: [
-                        [
-                            artifactId: 'jenboot',
-                            classifier: '',
-                            file: 'target/jenboot-0.0.1-SNAPSHOT.jar',
-                            type: 'jar'
-                        ]
-                    ]
-                )
-            }
-        }
+        // stage('Push Docker Image to Nexus') {
+        //     steps {
+        //         nexusArtifactUploader(
+        //             nexusVersion: 'nexus3',
+        //             protocol: 'http',
+        //             nexusUrl: '192.168.1.7:8081',
+        //             groupId: 'QA',
+        //             version: "${env.BUILD_ID}",
+        //             repository: 'jenboot',
+        //             credentialsId: 'nexus_server',
+        //             artifacts: [
+        //                 [
+        //                     artifactId: 'jenboot',
+        //                     classifier: '',
+        //                     file: 'target/jenboot-0.0.1-SNAPSHOT.jar',
+        //                     type: 'jar'
+        //                 ]
+        //             ]
+        //         )
+        //     }
+        // }
 
         stage('Deploy') {
             steps {
