@@ -68,7 +68,7 @@ pipeline {
 		        repository: 'jenboot',
 		        credentialsId: 'nexus_server',
 		        artifacts: [
-		            [artifactId: projectName,
+		            [artifactId: 'jenboot',
 		             classifier: '',
 		             file: ${DOCKER_CONTAINER_NAME} + version + '.jar',
 		             type: 'jar']
