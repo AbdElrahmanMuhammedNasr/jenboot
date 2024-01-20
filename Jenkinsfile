@@ -44,31 +44,37 @@ pipeline {
 
                     // Push the Docker image to the registry
                     // sh "docker push ${DOCKER_IMAGE_TAG}"
+
+                          withCredentials([usernamePassword(credentialsId: 'nexus_server', usernameVariable: 'USER', passwordVariable: 'PASS' )]){
+                       sh ' echo $PASS | docker login -u $USER --password-stdin http://192.168.1.7:8081'
+                       sh 'docker push http://192.168.1.7:8081/repository/jenboot:$BUILD_NUMBER'
+                    }
+                    
                 }
             }
         }
 
-        stage('Push Docker Image to Nexus') {
-            steps {
-                nexusArtifactUploader(
-                    nexusVersion: 'nexus3',
-                    protocol: 'http',
-                    nexusUrl: '192.168.1.7:8081',
-                    groupId: 'QA',
-                    version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
-                    repository: 'jenboot',
-                    credentialsId: 'nexus_server',
-                    artifacts: [
-                        [
-                            artifactId: 'jenboot',
-                            classifier: '',
-                            file: 'target/jenboot-0.0.1-SNAPSHOT.jar',
-                            type: 'jar'
-                        ]
-                    ]
-                )
-            }
-        }
+        // stage('Push Docker Image to Nexus') {
+        //     steps {
+        //         nexusArtifactUploader(
+        //             nexusVersion: 'nexus3',
+        //             protocol: 'http',
+        //             nexusUrl: '192.168.1.7:8081',
+        //             groupId: 'QA',
+        //             version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
+        //             repository: 'jenboot',
+        //             credentialsId: 'nexus_server',
+        //             artifacts: [
+        //                 [
+        //                     artifactId: 'jenboot',
+        //                     classifier: '',
+        //                     file: 'target/jenboot-0.0.1-SNAPSHOT.jar',
+        //                     type: 'jar'
+        //                 ]
+        //             ]
+        //         )
+        //     }
+        // }
 
         stage('Deploy') {
             steps {
