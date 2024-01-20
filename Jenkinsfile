@@ -61,7 +61,8 @@ pipeline {
             steps {
                 script {
                     // Log in to Nexus registry
-                    sh "docker login -u $NEXUS_USERNAME -p $NEXUS_PASSWORD ${NEXUS_REGISTRY}"
+                    // sh "docker login -u $NEXUS_USERNAME -p $NEXUS_PASSWORD ${NEXUS_REGISTRY}"
+                    sh "echo $NEXUS_PASSWORD | docker login -u $NEXUS_USERNAME --password-stdin ${NEXUS_REGISTRY}"
 
                     // Tag the Docker image for Nexus repository
                     sh "docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION} ${NEXUS_REGISTRY}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}"
