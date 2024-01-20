@@ -59,20 +59,21 @@ pipeline {
         }
 	stage('Push Docker Image to Nexus') {
             steps {
-                script {
-                    // Log in to Nexus registry
-                    // sh "docker login -u $NEXUS_USERNAME -p $NEXUS_PASSWORD ${NEXUS_REGISTRY}"
-                    sh "echo $NEXUS_PASSWORD | docker login -u $NEXUS_USERNAME --password-stdin ${NEXUS_REGISTRY}"
-
-                    // Tag the Docker image for Nexus repository
-                    sh "docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION} ${NEXUS_REGISTRY}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}"
-
-                    // Push the Docker image to Nexus repository
-                    sh "docker push ${NEXUS_REGISTRY}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}"
-
-                    // Log out of the Nexus registry
-                   // sh "docker logout ${NEXUS_REGISTRY}"
-                }
+                  nexusArtifactUploader(
+		        nexusVersion: 'nexus3',
+		        protocol: 'http',
+		        nexusUrl: 'http://192.168.1.7:8081',
+		        groupId: 'com.jenboot',
+		        version: ${BUILD_NUMBER},
+		        repository: 'jenboot',
+		        credentialsId: 'nexus_server',
+		        artifacts: [
+		            [artifactId: projectName,
+		             classifier: '',
+		             file: ${DOCKER_CONTAINER_NAME} + version + '.jar',
+		             type: 'jar']
+		        ]
+		     )
             }
         }
 
