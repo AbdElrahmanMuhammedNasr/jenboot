@@ -36,10 +36,10 @@ pipeline {
             steps {
                 script {
                     // Build and tag the Docker image
-                    dockerImage = docker.build  ${DOCKER_IMAGE_TAG}
+                    // dockerImage = docker.build  ${DOCKER_IMAGE_TAG}
 
                     
-                    // sh "docker build -t ${DOCKER_IMAGE_TAG} ."
+                    sh "docker build -t ${DOCKER_IMAGE_TAG} ."
                     sh "docker container run -d -p 6060:6060 --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_TAG}"
 
                     // Log in to Docker registry (if needed)
@@ -48,13 +48,15 @@ pipeline {
                     // Push the Docker image to the registry
                     // sh "docker push ${DOCKER_IMAGE_TAG}"
 
-                    //       withCredentials([usernamePassword(credentialsId: 'nexus_server', usernameVariable: 'USER', passwordVariable: 'PASS' )]){
-                    //    sh ' echo $PASS | docker login -u $USER --password-stdin http://192.168.1.7:8081'
-                    //    sh 'docker push http://192.168.1.7:8081/repository/jenboot:$BUILD_NUMBER'
-                    // }
+                    withCredentials([usernamePassword(credentialsId: 'nexus_server', usernameVariable: 'USER', passwordVariable: 'PASS' )]){
+                       sh ' echo $PASS | docker login -u $USER --password-stdin 192.168.1.7:8081'
+                       sh 'docker push http://192.168.1.7:8081/repository/jenboot:$BUILD_NUMBER'
+                    }
+                                    sh 'docker push 192.168.1.7:8081/jenbootd:$BUILD_NUMBER'
 
-                    docker.withRegistry( 'http://192.168.1.7:8081', nexus_server ) {
-                    dockerImage.push('latest')
+
+                    // docker.withRegistry( 'http://192.168.1.7:8081', nexus_server ) {
+                    // dockerImage.push('latest')
                     }
                     
                 }
