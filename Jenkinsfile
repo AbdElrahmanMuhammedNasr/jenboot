@@ -50,7 +50,7 @@ pipeline {
 
                     withCredentials([usernamePassword(credentialsId: 'nexus_server', usernameVariable: 'USER', passwordVariable: 'PASS' )]){
                        sh ' echo $PASS | docker login -u $USER --password-stdin 192.168.1.7:8081'
-                       sh 'docker push http://192.168.1.7:8081/repository/jenboot:$BUILD_NUMBER'
+                       // sh 'docker push http://192.168.1.7:8081/repository/jenboot:$BUILD_NUMBER'
                     }
                                     sh 'docker push 192.168.1.7:8081/jenbootd:$BUILD_NUMBER'
 
