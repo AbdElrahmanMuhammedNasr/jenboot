@@ -49,7 +49,7 @@ pipeline {
                     // sh "docker push ${DOCKER_IMAGE_TAG}"
 
                     withCredentials([usernamePassword(credentialsId: 'nexus_server', usernameVariable: 'USER', passwordVariable: 'PASS' )]){
-                       sh ' echo $PASS | docker login -u $USER --password-stdin http://192.168.1.4/:6060'
+                       sh ' echo $PASS | docker login -u $USER --password-stdin http://192.168.1.4:6060'
                        // sh 'docker push http://192.168.1.7:8081/repository/jenboot:$BUILD_NUMBER'
                     }
                      sh 'docker tag   jenbootd:$BUILD_NUMBER  192.168.1.4:6060/jenbootd:$BUILD_NUMBER'
