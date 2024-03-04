@@ -24,11 +24,13 @@ pipeline {
 
         stage("SonarQube Analysis") {
             steps {
-                script {
-                    // withSonarQubeEnv(credentialsId: 'sonerqube_secret_key') {
-                    //     sh "${MAVEN_HOME}/bin/mvn sonar:sonar"
-                    // }
-                }
+                                echo 'Deploy!'
+
+                // script {
+                //     withSonarQubeEnv(credentialsId: 'sonerqube_secret_key') {
+                //         sh "${MAVEN_HOME}/bin/mvn sonar:sonar"
+                //     }
+                // }
             }
         }
 
