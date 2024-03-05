@@ -50,12 +50,13 @@ pipeline {
                     // Push the Docker image to the registry
                     // sh "docker push ${DOCKER_IMAGE_TAG}"
 
-                    // withCredentials([usernamePassword(credentialsId: 'nexus_server', usernameVariable: 'USER', passwordVariable: 'PASS' )]){
-                    //    sh ' echo $PASS | docker login -u $USER --password-stdin https://192.168.1.4:6060'
-                    //    // sh 'docker push http://192.168.1.7:8081/repository/jenboot:$BUILD_NUMBER'
-                    // }
-                     sh 'docker tag   jenboot:$BUILD_NUMBER  192.168.1.4:6060/jenboot:$BUILD_NUMBER'
-                    sh 'docker push 192.168.1.4:6060/jenboot:$BUILD_NUMBER'
+                    withCredentials([usernamePassword(credentialsId: 'nexus_server', usernameVariable: 'USER', passwordVariable: 'PASS' )]){
+                       sh ' echo $PASS | docker login -u $USER --password-stdin https://192.168.1.4:6060'
+                                            sh 'docker tag   jenboot:$BUILD_NUMBER  192.168.1.4:6060/jenboot:$BUILD_NUMBER'
+
+                                            sh 'docker push 192.168.1.4:6060/jenboot:$BUILD_NUMBER'
+
+                    }
 
 
                     // docker.withRegistry( 'http://192.168.1.7:8081', nexus_server ) {
