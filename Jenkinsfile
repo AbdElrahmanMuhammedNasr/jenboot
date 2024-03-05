@@ -59,6 +59,30 @@ pipeline {
         }
     }
 
+        stage (){
+            steps {
+                 nexusArtifactUploader(
+                nexusVersion: 'nexus3',
+                protocol: 'http',
+                nexusUrl: 'http://192.168.1.4:8081/repository/core/',
+                groupId: 'com.core',
+                version: '0.0.1',
+                repository: 'core',
+                credentialsId: 'nexus_server',
+                artifacts: [
+                    [
+                     artifactId: 'core,
+                     classifier: '',
+                     file: 'core.jar',
+                     type: 'jar'
+                    ]
+        ]
+     )
+            
+            }
+            
+        }
+
       
 
         stage('Deploy') {
