@@ -65,13 +65,13 @@ pipeline {
                 nexusVersion: 'nexus3',
                 protocol: 'http',
                 nexusUrl: 'http://192.168.1.4:8081/repository/core/',
-                groupId: 'com.core',
+                groupId: 'jenboot',
                 version: '0.0.1',
                 repository: 'core',
                 credentialsId: 'nexus_server',
                 artifacts: [
                     [
-                     artifactId: 'core',
+                     artifactId: 'jenboot',
                      classifier: '',
                      file: 'target/jenboot-0.0.1-SNAPSHOT.jar',
                      type: 'jar'
