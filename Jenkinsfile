@@ -37,10 +37,7 @@ pipeline {
         stage('Build iamge and run container') {
             steps {
                 script {
-                    // Build and tag the Docker image
-                    // dockerImage = docker.build  ${DOCKER_IMAGE_TAG}
-
-                    
+               
                     sh "docker build -t ${DOCKER_IMAGE_TAG} ."
                     // sh "docker container run -d -p 6060:6060 --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_TAG}"
 
