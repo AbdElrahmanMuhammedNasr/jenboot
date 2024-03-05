@@ -59,7 +59,7 @@ pipeline {
         }
     }
 
-        stage (){
+        stage ('push maven'){
             steps {
                  nexusArtifactUploader(
                 nexusVersion: 'nexus3',
