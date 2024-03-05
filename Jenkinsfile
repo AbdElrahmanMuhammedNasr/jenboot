@@ -34,7 +34,7 @@ pipeline {
             }
         }
 
-        stage('Build and Push Docker Image') {
+        stage('Build iamge and run container') {
             steps {
                 script {
                     // Build and tag the Docker image
