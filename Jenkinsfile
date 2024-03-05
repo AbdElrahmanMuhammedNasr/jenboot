@@ -73,7 +73,7 @@ pipeline {
                     [
                      artifactId: 'core',
                      classifier: '',
-                     file: 'target/core-0.0.1-SNAPSHOT.jar',
+                     file: 'target/jenboot-0.0.1-SNAPSHOT.jar',
                      type: 'jar'
                     ]
         ]
