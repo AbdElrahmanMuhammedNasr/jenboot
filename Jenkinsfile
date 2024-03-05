@@ -71,7 +71,7 @@ pipeline {
                 credentialsId: 'nexus_server',
                 artifacts: [
                     [
-                     artifactId: 'core,
+                     artifactId: 'core',
                      classifier: '',
                      file: 'core.jar',
                      type: 'jar'
